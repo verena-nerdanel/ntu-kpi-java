@@ -1,0 +1,5 @@
+hello	привіт
+world	світ
+bored	набридло
+tired	втомилася
+goodbye бувайте
