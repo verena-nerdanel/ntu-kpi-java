@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:lang="${lang}">
+    <meta charset="UTF-8">
+    <title th:text="#{page.home.title}"></title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+<div class="section">
+    <h1 th:text="#{page.home.title}"></h1>
+    <div th:replace="~{fragments.html :: language-selector}"></div>
+</div>
+<hr>
+<h2 th:text="#{page.home.section.backoffice}"></h2>
+<a href="/new">
+    <div class="menu-item mt-2" th:text="#{page.new.title}"></div>
+</a>
+<a href="/manage">
+    <div class="menu-item mt-2" th:text="#{page.manage.title}"></div>
+</a>
+<h2 th:text="#{page.home.section.customer}"></h2>
+<a href="/check">
+    <div class="menu-item mt-2" th:text="#{page.check.title}"></div>
+</a>
+<a href="/pass">
+    <div class="menu-item mt-2" th:text="#{page.pass.title}"></div>
+</a>
+</body>
+</html>

@@ -1,0 +1,10 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <select th:fragment="language-selector" class="locale-selector" onchange="window.location.replace('?lang=' + event.target.value)">
+        <option value="en" th:text="#{languages.en}" th:selected="${lang eq 'en'}"></option>
+        <option value="no" th:text="#{languages.no}" th:selected="${lang eq 'no'}"></option>
+        <option value="ja" th:text="#{languages.ja}" th:selected="${lang eq 'ja'}"></option>
+    </select>
+</body>
+</html>

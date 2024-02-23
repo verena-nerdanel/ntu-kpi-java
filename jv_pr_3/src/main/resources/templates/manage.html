@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:lang="${lang}">
+    <meta charset="UTF-8">
+    <title th:text="#{page.manage.title}"></title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+<div class="section">
+    <h1 th:text="#{page.manage.title}"></h1>
+    <div th:replace="fragments.html :: language-selector"></div>
+</div>
+<hr>
+<div class="mt-3">
+    <table>
+        <tr>
+            <th th:text="#{common.ticket.id}"></th>
+            <th th:text="#{common.ticket.issuedDate}"></th>
+            <th th:text="#{common.ticket.validFrom}"></th>
+            <th th:text="#{common.ticket.validTill}"></th>
+            <th th:text="#{common.ticket.timeType}"></th>
+            <th th:text="#{common.ticket.dayType}"></th>
+            <th th:text="#{common.ticket.usedDays}"></th>
+            <th th:text="#{common.ticket.usedEntrances}"></th>
+            <th th:text="#{common.ticket.status}"></th>
+            <th th:text="#{common.ticket.actions}"></th>
+        </tr>
+        <tr th:each="ticket: ${tickets}">
+            <td th:text="${ticket.id}"></td>
+            <td th:text="${ticket.issuedDate}"></td>
+            <td th:text="${ticket.validFrom}"></td>
+            <td th:text="${ticket.validTill}"></td>
+            <td th:text="${ticket.timeType}"></td>
+            <td th:text="${ticket.dayType}"></td>
+            <td th:text="${ticket.usedDaysCount + ' / ' + ticket.maxDaysCount}"></td>
+            <td th:text="${ticket.entrances.size() + ' / ' + ticket.maxEntrancesCount} "></td>
+            <td th:if="${ticket.active}" th:text="#{common.ticket.active}" class="green"></td>
+            <td th:if="${!ticket.active}" th:text="#{common.ticket.inactive}" class="red"></td>
+            <td>
+                <form th:if="${ticket.active}" action="/deactivate" method="post">
+                    <input type="hidden" name="id" th:value="${ticket.id}" />
+                    <input type="submit" th:value="#{page.manage.actions.deactivate}"/>
+                </form>
+                <form th:if="${!ticket.active}" action="/activate" method="post">
+                    <input type="hidden" name="id" th:value="${ticket.id}" />
+                    <input type="submit" th:value="#{page.manage.actions.activate}"/>
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

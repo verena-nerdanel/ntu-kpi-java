@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:lang="${lang}">
+    <meta charset="UTF-8">
+    <title th:text="#{page.check.title}"></title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+<div class="section">
+    <h1 th:text="#{page.check.title}"></h1>
+    <div th:replace="fragments.html :: language-selector"></div>
+</div>
+<hr>
+<form action="/check" method="get">
+    <span>Ticket ID: </span> <input type="search" name="id" th:value="${id}">
+    <input type="submit" value="Find">
+</form>
+<div th:if="${id != null && data != null}" class="mt-3">
+    <table>
+        <tr>
+            <th>Status</th>
+            <td th:if="${data.active}" th:text="Active" class="green"></td>
+            <td th:if="${!data.active}" th:text="Inactive" class="red"></td>
+        </tr>
+        <tr>
+            <th>Valid from</th>
+            <td th:text="${data.validFrom}"></td>
+        </tr>
+        <tr>
+            <th>Valid till</th>
+            <td th:text="${data.validTill}"></td>
+        </tr>
+        <tr>
+            <th>Type</th>
+            <td>
+                <span th:if="${data.dayType.name() == 'WEEKEND'}">Weekend</span>
+                <span th:if="${data.dayType.name() == 'WEEKDAY'}">Weekday</span>
+                <span th:if="${data.dayType.name() == 'ANY'}">Any day</span>
+                <span th:if="${data.timeType.name() == 'MORNING'}">, 09:00 - 13:00</span>
+                <span th:if="${data.timeType.name() == 'EVENING'}">, 13:00 - 17:00</span>
+                <span th:if="${data.timeType.name() == 'ANY'}">, 09:00 - 17:00</span>
+            </td>
+        </tr>
+        <tr th:if="${data.maxEntrancesCount > 0}">
+            <th>Used entrances</th>
+            <td th:text="${data.entrances.size() + ' / ' + data.maxEntrancesCount}"></td>
+        </tr>
+        <tr th:if="${data.maxDaysCount > 0}">
+            <th>Used days</th>
+            <td th:text="${'? / ' + data.maxDaysCount}"></td>
+        </tr>
+        <tr>
+            <th>Last entrance</th>
+            <td th:if="${data.entrances.size() > 0}" th:text="${data.entrances.get(data.entrances.size()-1).date}"></td>
+            <td th:if="${data.entrances.size() == 0}">No entrances yet</td>
+        </tr>
+    </table>
+</div>
+<div th:if="${id != null && data == null}" class="mt-3">
+    Ticket not found
+</div>
+</body>
+</html>
